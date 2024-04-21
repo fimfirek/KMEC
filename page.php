@@ -39,7 +39,7 @@ require_once 'config.php';
             $idProduct = $row['id'];
             $sqlTitle = "SELECT title FROM produkty WHERE id='$idProduct'";
             $sqlPrice = "SELECT price FROM produkty WHERE id='$idProduct'";
-            $sqlImage = "SELECT image FROM produkty WHERE id='$idProduct'";
+            $sqlImage = "SELECT 'image' FROM produkty WHERE id='$idProduct'";
 
         
             $imageResult = mysqli_query($conn, $sqlImage);
@@ -49,19 +49,15 @@ require_once 'config.php';
             $imageRow= mysqli_fetch_assoc($imageResult);
             $titleRow = mysqli_fetch_assoc($titleResult);
             $priceRow = mysqli_fetch_assoc($priceResult);
-            
-            $imageData = base64_encode($imageRow['image']);
 
-       
-                $idProduct = $row['id'];
-                $title = $row['title'];
-                $price = $row['price'];
-                $imagePath = $row['image'];
+            $title = $row['title'];
+            $price = $row['price'];
+            $imagePath = $row['image'];
             
                 echo 
                 '<div class="post-box">' .
                     '<div class="image-box">' .
-                    '<img src="' . $imagePath . '">' .
+                    '<img height="100%" width="100%" src="data:image;base64,'.$imagePath.'">' .
                     '</div>'  .
                     '<div class ="heading-post">' . $title . '</div>'.
                     '<div class ="price-post">' . $price . ' $</div>'

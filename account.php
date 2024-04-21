@@ -36,17 +36,6 @@ if(isset($_SESSION['id']) && isset($_SESSION['name'])){
                 }
             }
 ?>
-<?php  
-    if(isset($_POST['title'])){
-    $title = $_POST['title'];
-    $price = $_POST['price'];
-    $image = $_POST['image'];
-    $imageConv = base64_encode($image);
-    $sqlInjectProdukty = "INSERT INTO produkty (title,price,image) VALUES ('$title','$price', '$imageConv')";
-    $result = mysqli_query($conn,$sqlInjectProdukty);
-    }
- 
-?>
                     <div class="hi-text">Hello, <?php echo $_SESSION['name']; ?></div>
                     <button id="logout"><a href="logout.php">Log Out</a></button>
                     <button id="logout"><a href="page.php">Spat na eshop</a></button>
@@ -68,14 +57,37 @@ if(isset($_SESSION['id']) && isset($_SESSION['name'])){
               //  <button id="submit" type="submit" name="upload_avatar">Upload Avatar</button>
             //</form>
             ?>
-            <div class="container-account">
-            <form id="CreatePost" action="" method="post">
-            <input id="post" type="text" name="title" placeholder="Cervene Tricko" required>
-            <input id="post" type="double" name="price" placeholder="00,00$" required>
-            <input id="postpicture" type="file" name="image">
-            <button id="postButton" type="submit">Nahrat na eshop</button>
-            </form>
+
+           
+            <div class="flex-box-product-form">
+                <div class="container-account">
+                    <form id="CreatePost" action="" method="post" enctype="multipart/form-data">
+                        <input id="post" type="text" name="title" placeholder="Cervene Tricko" required>
+                        <input id="post" type="double" name="price" placeholder="00,00$" required>
+                        <input id="postpicture" type="file" name="image-post-pr">
+                        <button id="postButton" name="product-post" type="submit">Nahrat na eshop</button>
+                    </form>
+                </div>
             </div>
+
+            <?php  
+                if(isset($_POST['product-post'])){
+                $title = $_POST['title'];
+                $price = $_POST['price'];
+                
+                    if(is_uploaded_file($_FILES['image-post-pr']['tmp_name'])){
+                        $image = $_FILES['image-post-pr']['tmp_name'];
+                        $image = base64_encode(file_get_contents($image));
+
+                        $sqlInjectProdukty = "INSERT INTO produkty (title,price,image) VALUES ('$title','$price', '$image')";
+                        $result = mysqli_query($conn,$sqlInjectProdukty);
+                    } 
+                    else{
+                        echo "Nahraj obrazok!";
+                    }
+                }
+            
+            ?>
         </body>
         </html>
 <?php

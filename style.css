@@ -4,6 +4,9 @@
   font-family: Arial;
   text-decoration: none;
 }
+body{
+  background: rgba(201, 201, 201, 0.788);
+}
 
 .alert-box {
   position: absolute;
@@ -28,6 +31,9 @@
 }
 
 a{
+  text-decoration: none;
+}
+button a{
   text-decoration: none;
 }
 
@@ -58,9 +64,10 @@ a{
   background: rgba(255, 255, 255);
 }
 .navbar > * {
-  margin : 1vw 4vw;
+  margin : 1vw 3vw;
 }
 .navbar-button{
+  font-size: 1.2vw;
   font-weight: 400;
 }
 
@@ -88,7 +95,7 @@ button#page-account-button{
   color: white;
   font-size: 1.3vw;
   font-weight: 400;
-  width: 14vw;
+  width: 12vw;
   height: 2.7vw;
   border-radius: 0.4vw;
   border: 0vw;
@@ -102,35 +109,56 @@ button#page-account-button:hover{
   font-weight: 600;
   color: white;
 }
-#page-account-button a{
-  text-decoration: none;
-}
 
-button#page-account-button2{
-  background-color:#c55252;
+#page-account-button a{
+  transition: ease-in-out 100ms;
   color: white;
   font-size: 1.3vw;
   font-weight: 400;
-  width: 14vw;
+}
+
+#page-account-button:hover a{
+  transition: ease-in-out 100ms;
+  background-color: #273c2b;
+  font-weight: 600;
+  color: white;
+}
+
+
+button#page-account-button2{
+  background-color:#588157;
+  color: white;
+  font-size: 1.3vw;
+  font-weight: 400;
+  width: 12vw;
   height: 2.7vw;
   border-radius: 0.4vw;
   border: 0vw;
   transition: ease-in-out 100ms;
   text-decoration: none;
 }
-#page-account-button2 a{
-  text-decoration: none;
-}
 
 button#page-account-button2:hover{
   transition: ease-in-out 100ms;
-  background-color: rgb(105, 39, 23);
+  background-color: #273c2b;
   font-weight: 600;
   color: white;
 }
-#page-account-button2:hover a{
-  text-decoration: none;
+
+#page-account-button2 a{
+  transition: ease-in-out 100ms;
+  color: white;
+  font-size: 1.3vw;
+  font-weight: 400;
 }
+
+#page-account-button2:hover a{
+  transition: ease-in-out 100ms;
+  background-color: #273c2b;
+  font-weight: 600;
+  color: white;
+}
+
 
 .blur{
   display: flex;
@@ -186,12 +214,21 @@ button#page-account-button2:hover{
   font-size: 1.8vw;
 }
 
+.flex-box-product-form{
+  display: flex;
+  justify-content: center;
+}
+
 .container-account{
-  margin-top: 3vw;
+  margin: 2vw 0vw;
+  padding: 2vw 2vw;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   flex-direction: row;
+  background: white;
+  width: 86vw;
+  border-radius: 12px;
 }
 form#CreatePost{
   display: flex;
@@ -451,9 +488,10 @@ button#second:hover{
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 0.2vw solid rgba(88, 88, 88, 0.685);
   padding: 1vw 1vw;
   width: 88%;
+  background: white;
+  border-radius: 12px;
 }
 
 .avatar-pic{
