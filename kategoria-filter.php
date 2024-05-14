@@ -4,25 +4,25 @@ require_once 'navbar.php';
 
 $minPrice = isset($_GET['minPrice']) ? $_GET['minPrice'] : 0;
 $maxPrice = isset($_GET['maxPrice']) ? $_GET['maxPrice'] : 885.2;
-
-if (!isset($_GET['minPrice']) && !isset($_GET['maxPrice'])) {
-    $sqlSelect = "SELECT * FROM produkty";
-} else {
-    $sqlSelect = "SELECT * FROM produkty WHERE price BETWEEN ? AND ?";
-}
+$category = isset($_GET['category']) ? $_GET['category'] : null;
 
 if (isset($_GET['minPrice']) || isset($_GET['maxPrice'])) {
+    $sqlSelect = "SELECT * FROM produkty WHERE price BETWEEN ? AND ?";
     $stmt = mysqli_prepare($conn, $sqlSelect);
-
     mysqli_stmt_bind_param($stmt, "dd", $minPrice, $maxPrice);
-
-    mysqli_stmt_execute($stmt);
-
-    $result = mysqli_stmt_get_result($stmt);
 } else {
-    $result = mysqli_query($conn, $sqlSelect);
+    $sqlSelect = "SELECT * FROM produkty";
+    $stmt = mysqli_prepare($conn, $sqlSelect);
 }
 
+if ($category) {
+    $sqlSelect .= " WHERE category = ?";
+    $stmt = mysqli_prepare($conn, $sqlSelect);
+    mysqli_stmt_bind_param($stmt, "s", $category);
+}
+
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 ?>
 
 <div class="blur">
@@ -51,7 +51,7 @@ if (isset($_GET['minPrice']) || isset($_GET['maxPrice'])) {
                 '</div>'  .
                 '<div class ="heading-post">' . $title . '</div>'.
                 '<div class ="price-post">' . $price . ' $</div>'.
-                '<button id="page-account-button"><a href="product-page.php">Produkt</a></button>'
+                '<button id="page-account-button"><a href="product-page.php?category=' . $category . '">Produkt</a></button>'
             .'</div>';
         }
     } else {
