@@ -16,7 +16,7 @@ if (isset($_GET['minPrice']) || isset($_GET['maxPrice'])) {
 }
 
 if ($category) {
-    $sqlSelect .= " WHERE category = ?";
+    $sqlSelect = "SELECT p.* FROM produkty p JOIN category c ON p.category = c.id WHERE c.name = ?";
     $stmt = mysqli_prepare($conn, $sqlSelect);
     mysqli_stmt_bind_param($stmt, "s", $category);
 }
@@ -24,6 +24,7 @@ if ($category) {
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 ?>
+
 
 <div class="blur">
     <div class="filter-container">
