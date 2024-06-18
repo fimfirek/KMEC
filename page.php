@@ -3,24 +3,33 @@ require_once 'config.php';
 require_once 'navbar.php';
 
 $minPrice = isset($_GET['minPrice']) ? $_GET['minPrice'] : 0;
-$maxPrice = isset($_GET['maxPrice']) ? $_GET['maxPrice'] : 885.2;
+$maxPrice = isset($_GET['maxPrice']) ? $_GET['maxPrice'] : 885.5;
 $sortOrder = isset($_GET['sortOrder']) ? $_GET['sortOrder'] : '';
 
-if (!isset($_GET['minPrice']) && !isset($_GET['maxPrice'])) {
-    $sqlSelect = "SELECT * FROM produkty";
-} else {
-    $sqlSelect = "SELECT * FROM produkty WHERE price BETWEEN ? AND ?";
+$sqlSelect = "SELECT * FROM produkty WHERE price BETWEEN ? AND ?";
+
+switch($sortOrder) {
+    case 'alphabetical_asc':
+        $sqlSelect .= " ORDER BY title ASC";
+        break;
+    case 'alphabetical_desc':
+        $sqlSelect .= " ORDER BY title DESC";
+        break;
+    case 'price_asc':
+        $sqlSelect .= " ORDER BY price ASC";
+        break;
+    case 'price_desc':
+        $sqlSelect .= " ORDER BY price DESC";
+        break;
+    default:
+        // No sorting applied
+        break;
 }
 
-
-if (isset($_GET['minPrice']) || isset($_GET['maxPrice'])) {
-    $stmt = mysqli_prepare($conn, $sqlSelect);
-    mysqli_stmt_bind_param($stmt, "dd", $minPrice, $maxPrice);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-} else {
-    $result = mysqli_query($conn, $sqlSelect);
-}
+$stmt = mysqli_prepare($conn, $sqlSelect);
+mysqli_stmt_bind_param($stmt, "dd", $minPrice, $maxPrice);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 ?>
 
 <div class="blur">
